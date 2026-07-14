@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiSAT - Sistem Informasi Satker</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body{
+            background:#f5f7fb;
+        }
+
+        .hero-overlay{
+            background: rgba(13,37,79,0.80);
+        }
+
+        .card-kementerian:hover{
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        /* Sticky Header */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .sticky-header.scrolled {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Parallax effect */
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Button glow effect */
+        .btn-glow:hover {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO SECTION -->
+<section class="relative overflow-hidden parallax-bg">
+
+    <!-- Background -->
+    <div class="absolute inset-0">
+        <div class="absolute inset-0 hero-overlay"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-8 py-20 flex items-center">
+
+        <div class="flex flex-col lg:flex-row items-center gap-10 w-full" data-aos="fade-up" data-aos-duration="1000">
+
+            <!-- Logo -->
+            <div data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
+                <img
+                    src="{{ asset('asset/logo-sisat.png.png') }}"
+                    alt="SiSAT"
+                    class="w-52 drop-shadow-xl hover:scale-105 transition-transform duration-300">
+            </div>
+
+            <!-- Text -->
+            <div class="text-white">
+
+                <h1 class="text-4xl md:text-5xl font-bold" data-aos="fade-up" data-aos-duration="800">
+                    SiSAT
+                </h1>
+
+                <p class="text-3xl text-white mt-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                    Sistem Informasi Satker
+                </p>
+
+                <p class="text-xl text-blue-200 mt-3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                    Monitoring dan Informasi Satuan Kerja
+                </p>
+
+                <p class="text-yellow-400 mt-6 font-medium" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                    Kanwil DJPb Provinsi Lampung
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white scroll-indicator">
+            <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- MENU CEPAT -->
+<section class="sticky-header">
+
+    <div class="max-w-6xl mx-auto px-4 py-5">
+
+        <div class="grid md:grid-cols-3 gap-4">
+
+            <a href="#"
+               class="btn-glow bg-blue-700 hover:bg-blue-800 text-white text-center py-4 rounded-lg font-semibold transition duration-300">
+                Dashboard Satker
+            </a>
+
+            <a href="#"
+               class="btn-glow bg-blue-700 hover:bg-blue-800 text-white text-center py-4 rounded-lg font-semibold transition duration-300">
+                Monitoring Kinerja
+            </a>
+
+            <a href="#"
+               class="btn-glow bg-blue-700 hover:bg-blue-800 text-white text-center py-4 rounded-lg font-semibold transition duration-300">
+                Data Kementerian
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FILTER -->
+<section class="max-w-7xl mx-auto px-6 mt-10">
+
+    <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-duration="800">
+
+        <form method="GET">
+
+            <div class="grid md:grid-cols-4 gap-4">
+
+                <div>
+                    <label class="block mb-2 text-sm font-semibold">
+                        Kementerian
+                    </label>
+
+                    <input
+                        type="text"
+                        name="kementerian"
+                        value="{{ $filterKementerian ?? '' }}"
+                        class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                        placeholder="Nama kementerian">
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-semibold">
+                        Kode Satker
+                    </label>
+
+                    <input
+                        type="text"
+                        name="kode_satker"
+                        value="{{ $filterKodeSatker ?? '' }}"
+                        class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                        placeholder="Kode Satker">
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-semibold">
+                        Wilayah KPPN
+                    </label>
+
+                    <select
+                        name="kppn"
+                        class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+
+                        <option value="">
+                            Semua KPPN
+                        </option>
+
+                        @foreach($kppnOptions as $option)
+                            <option
+                                value="{{ $option }}"
+                                @selected(($filterKppn ?? '') == $option)>
+                                {{ $option }}
+                            </option>
+                        @endforeach
+
+                    </select>
+                </div>
+
+                <div class="flex items-end gap-3">
+
+                    <button
+                        class="btn-glow bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold w-full transition duration-300">
+                        Filter
+                    </button>
+
+                    <a
+                        href="/"
+                        class="border border-gray-300 px-6 py-3 rounded-lg text-center w-full hover:bg-gray-50 transition duration-300">
+                        Reset
+                    </a>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+<!-- JUDUL -->
+<section class="max-w-7xl mx-auto px-6 mt-12">
+
+    <div class="text-center mb-10" data-aos="fade-up" data-aos-duration="800">
+
+        <h2 class="text-4xl font-bold text-gray-800">
+            Pilih Kementerian / Lembaga
+        </h2>
+
+        <p class="text-gray-500 mt-3">
+            Dashboard Monitoring Satuan Kerja
+        </p>
+
+    </div>
+
+</section>
+
+<!-- CARD KEMENTERIAN -->
+<section class="max-w-7xl mx-auto px-6 pb-16">
+
+    @if($kementerian->isEmpty())
+
+        <div class="bg-white rounded-xl shadow p-10 text-center" data-aos="fade-up">
+
+            Tidak ada data ditemukan.
+
+        </div>
+
+    @else
+
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+
+            @foreach($kementerian as $kem)
+
+            <a href="#"
+               class="card-kementerian bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-blue-100 overflow-hidden"
+               data-aos="fade-up"
+               data-aos-duration="800"
+               data-aos-delay="{{ $loop->index * 100 }}">
+
+                <!-- Gambar -->
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6">
+
+                    <img
+                        src="{{ asset('asset/icon-kementerian.png') }}"
+                        class="w-28 h-28 object-contain mx-auto hover:scale-110 transition-transform duration-300">
+
+                </div>
+
+                <!-- Isi -->
+                <div class="p-5">
+
+                    <h3 class="font-bold text-gray-800 text-center text-sm min-h-[48px]">
+
+                        {{ $kem->nama_kementerian }}
+
+                    </h3>
+
+                    <div class="mt-4 text-center">
+
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-blue-200 transition">
+                            Kode {{ $kem->kode_kementerian }}
+                        </span>
+
+                    </div>
+
+                    <div class="mt-5 text-center">
+
+                        <span class="text-blue-700 font-semibold text-sm hover:text-blue-900 transition">
+                            Lihat Dashboard →
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+            @endforeach
+
+        </div>
+
+    @endif
+
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#0d254f] text-white py-8 mt-20">
+
+    <div class="max-w-7xl mx-auto px-6 text-center" data-aos="fade-up" data-aos-duration="800">
+
+        <h3 class="font-bold text-lg">
+            SiSAT
+        </h3>
+
+        <p class="text-blue-200 mt-2">
+            Sistem Informasi Satker
+        </p>
+
+        <p class="text-sm text-gray-300 mt-3">
+            © {{ date('Y') }} Kanwil DJPb Provinsi Lampung
+        </p>
+
+    </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    // Initialize AOS (Animate On Scroll)
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: false,
+        mirror: true
+    });
+
+    // Sticky Header Effect
+    const stickyHeader = document.querySelector('.sticky-header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            stickyHeader.classList.add('scrolled');
+        } else {
+            stickyHeader.classList.remove('scrolled');
+        }
+    });
+
+    // Smooth scroll untuk scroll indicator
+    document.querySelector('.scroll-indicator')?.addEventListener('click', () => {
+        document.querySelector('.sticky-header').scrollIntoView({ behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>

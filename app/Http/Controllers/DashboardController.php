@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Kementerian;
+use Illuminate\Http\Request;
+
+class DashboardController extends Controller
+{
+    public function index(Request $request)
+    {
+        $query = Kementerian::query();
+
+        $filterKementerian = trim((string) $request->input('kementerian', ''));
+        if ($filterKementerian !== '') {
+            $query->where(function ($q) use ($filterKementerian) {
+                $q->where('nama_kementerian', 'like', "%{$filterKementerian}%")
+                    ->orWhere('kode_kementerian', 'like', "%{$filterKementerian}%");
+            });
+        }
+
+        $filterKodeSatker = trim((string) $request->input('kode_satker', ''));
+        if ($filterKodeSatker !== '') {
+            $query->whereHas('satkers', function ($q) use ($filterKodeSatker) {
+                $q->where('kode_satker', 'like', "%{$filterKodeSatker}%");
+            });
+        }
+
+        $filterKppn = trim((string) $request->input('kppn', ''));
+        if ($filterKppn !== '') {
+            $query->whereHas('satkers', function ($q) use ($filterKppn) {
+                $q->whereHas('wilayah', function ($wilayahQuery) use ($filterKppn) {
+                    $wilayahQuery->where('nama_wilayah', 'like', "%{$filterKppn}%");
+                });
+            });
+        }
+
+        try {
+            $kementerian = $query->get();
+        } catch (\Throwable $e) {
+            $kementerian = collect();
+        }
+
+        $kppnOptions = [
+            'KPPN Bandar Lampung',
+            'KPPN Metro',
+            'KPPN Kotabumi',
+            'KPPN Liwa',
+        ];
+
+        return view('dashboard', compact(
+            'kementerian',
+            'filterKementerian',
+            'filterKodeSatker',
+            'filterKppn',
+            'kppnOptions'
+        ));
+    }
+}
