@@ -120,7 +120,6 @@
     </div>
 
 
-
             </form>
 
         </div>
@@ -128,34 +127,6 @@
     </div>
 
 </section>
-
-<!-- MENU CEPAT -->
-<!-- <section class="sticky-header">
-
-    <div class="max-w-6xl mx-auto px-4 py-5"> -->
-
-        <!-- <div class="grid md:grid-cols-3 gap-4">
-
-            <a href="#"
-               class="btn-glow bg-blue-700 hover:bg-blue-800 text-white text-center py-4 rounded-lg font-semibold transition duration-300">
-                Dashboard Satker
-            </a>
-
-            <a href="#"
-               class="btn-glow bg-blue-700 hover:bg-blue-800 text-white text-center py-4 rounded-lg font-semibold transition duration-300">
-                Monitoring Kinerja
-            </a>
-
-            <a href="#"
-               class="btn-glow bg-blue-700 hover:bg-blue-800 text-white text-center py-4 rounded-lg font-semibold transition duration-300">
-                Data Kementerian
-            </a>
-
-        </div> -->
-<!-- 
-    </div>
-
-</section> -->
 
 <!-- FILTER -->
 <section class="max-w-7xl mx-auto px-6 mt-10">
@@ -276,12 +247,20 @@
                data-aos-delay="{{ $loop->index * 100 }}">
 
                 <!-- Gambar -->
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 relative">
+                    
+                    <!-- Tambahkan teks kode di sudut kiri atas seperti pada gambar Anda (opsional) -->
+                    <span class="absolute top-3 left-4 text-sm font-bold text-gray-700">
+                        {{ $kem->kode_kementerian }}
+                    </span>
 
-                    <img
-                        src="{{ asset('asset/icon-kementerian.png') }}"
-                        class="w-28 h-28 object-contain mx-auto hover:scale-110 transition-transform duration-300">
-
+                    <!-- Panggil gambar secara dinamis berdasarkan kode -->
+                    <img 
+                        src="{{ asset('asset/' . $kem->kode_kementerian . '.png') }}" 
+                        onerror="this.src='{{ asset('asset/default-logo.png') }}'"
+                        class="w-28 h-28 object-contain mx-auto hover:scale-110 transition-transform duration-300"
+                        alt="Logo {{ $kem->nama_kementerian }}">
+                        
                 </div>
 
                 <!-- Isi -->
@@ -295,9 +274,9 @@
 
                     <div class="mt-4 text-center">
 
-                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-blue-200 transition">
+                        <!-- <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold hover:bg-blue-200 transition">
                             Kode {{ $kem->kode_kementerian }}
-                        </span>
+                        </span> -->
 
                     </div>
 
