@@ -75,41 +75,41 @@
 <body>
 
 <!-- HERO SECTION -->
-<section class="relative overflow-hidden parallax-bg">
+<section class="relative h-[650px]">
 
     <!-- Background -->
-    <div class="absolute inset-0">
-        <div class="absolute inset-0 hero-overlay"></div>
-    </div>
+    <img
+        src="{{ asset('asset/bg-kanwil.jpg') }}"
+        class="absolute inset-0 w-full h-full object-cover"
+        alt="">
 
-    <div class="relative max-w-7xl mx-auto px-8 py-20 flex items-center">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/50"></div>
 
-        <div class="flex flex-col lg:flex-row items-center gap-10 w-full" data-aos="fade-up" data-aos-duration="1000">
+    <!-- Content -->
+    <div class="relative max-w-7xl mx-auto h-full px-8 flex items-center">
 
-            <!-- Logo -->
-            <div data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
-                <img
-                    src="{{ asset('asset/logo-sisat.png.png') }}"
-                    alt="SiSAT"
-                    class="w-52 drop-shadow-xl hover:scale-105 transition-transform duration-300">
+        <div class="grid lg:grid-cols-2 gap-10 items-center w-full">
+
+            <!-- Kiri -->
+            <div>
+                <!-- <img
+                    src="{{ asset('asset/logo-sisat.png') }}"
+                    class="w-90 mb-50"> -->
             </div>
 
-            <!-- Text -->
+            <!-- Kanan -->
             <div class="text-white">
 
-                <h1 class="text-4xl md:text-5xl font-bold" data-aos="fade-up" data-aos-duration="800">
-                    SiSAT
+                <h1 class="text-6xl font-bold leading-tight">
+                    Sistem Informasi Satker
                 </h1>
 
-                <p class="text-3xl text-white mt-4" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
-                    Sistem Informasi Satker
-                </p>
-
-                <p class="text-xl text-blue-200 mt-3" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                <p class="text-2xl mt-4">
                     Monitoring dan Informasi Satuan Kerja
                 </p>
 
-                <p class="text-yellow-400 mt-6 font-medium" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                <p class="mt-4 text-blue-200">
                     Kanwil DJPb Provinsi Lampung
                 </p>
 
@@ -117,11 +117,12 @@
 
         </div>
 
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white scroll-indicator">
-            <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
+    </div>
+
+
+
+            </form>
+
         </div>
 
     </div>
@@ -129,11 +130,11 @@
 </section>
 
 <!-- MENU CEPAT -->
-<section class="sticky-header">
+<!-- <section class="sticky-header">
 
-    <div class="max-w-6xl mx-auto px-4 py-5">
+    <div class="max-w-6xl mx-auto px-4 py-5"> -->
 
-        <div class="grid md:grid-cols-3 gap-4">
+        <!-- <div class="grid md:grid-cols-3 gap-4">
 
             <a href="#"
                class="btn-glow bg-blue-700 hover:bg-blue-800 text-white text-center py-4 rounded-lg font-semibold transition duration-300">
@@ -150,11 +151,11 @@
                 Data Kementerian
             </a>
 
-        </div>
-
+        </div> -->
+<!-- 
     </div>
 
-</section>
+</section> -->
 
 <!-- FILTER -->
 <section class="max-w-7xl mx-auto px-6 mt-10">
@@ -246,10 +247,6 @@
         <h2 class="text-4xl font-bold text-gray-800">
             Pilih Kementerian / Lembaga
         </h2>
-
-        <p class="text-gray-500 mt-3">
-            Dashboard Monitoring Satuan Kerja
-        </p>
 
     </div>
 
