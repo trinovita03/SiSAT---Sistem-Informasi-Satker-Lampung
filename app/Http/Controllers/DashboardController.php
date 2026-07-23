@@ -36,7 +36,15 @@ class DashboardController extends Controller
         }
 
         try {
-            $kementerian = $query->get();
+            // Jika ada filter/pencarian, tampilkan semua hasil
+            // Jika tidak ada filter, limit hanya 10 kementerian
+            $hasFilter = $filterKementerian !== '' || $filterKodeSatker !== '' || $filterKppn !== '';
+            
+            if (!$hasFilter) {
+                $kementerian = $query->limit(10)->get();
+            } else {
+                $kementerian = $query->get();
+            }
         } catch (\Throwable $e) {
             $kementerian = collect();
         }
