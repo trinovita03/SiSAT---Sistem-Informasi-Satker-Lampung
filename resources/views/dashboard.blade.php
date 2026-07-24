@@ -135,7 +135,7 @@
 
         <form method="GET">
 
-            <div class="grid md:grid-cols-4 gap-4">
+            <div class="grid md:grid-cols-3 gap-4">
 
                 <div>
                     <label class="block mb-2 text-sm font-semibold">
@@ -148,19 +148,6 @@
                         value="{{ $filterKementerian ?? '' }}"
                         class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                         placeholder="Nama kementerian">
-                </div>
-
-                <div>
-                    <label class="block mb-2 text-sm font-semibold">
-                        Kode Satker
-                    </label>
-
-                    <input
-                        type="text"
-                        name="kode_satker"
-                        value="{{ $filterKodeSatker ?? '' }}"
-                        class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                        placeholder="Kode Satker">
                 </div>
 
                 <div>
@@ -248,11 +235,6 @@
 
                 <!-- Gambar -->
                 <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 relative">
-                    
-                    <!-- Tambahkan teks kode di sudut kiri atas seperti pada gambar Anda (opsional) -->
-                    <span class="absolute top-3 left-4 text-sm font-bold text-gray-700">
-                        {{ $kem->kode_kementerian }}
-                    </span>
 
                     <!-- Panggil gambar secara dinamis berdasarkan kode -->
                     @php
