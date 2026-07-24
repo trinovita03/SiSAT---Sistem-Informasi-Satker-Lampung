@@ -49,6 +49,21 @@ class DashboardController extends Controller
             $kementerian = collect();
         }
 
+        // Generate list of available logo files
+        $assetPath = public_path('asset');
+        $availableLogos = [];
+        if (is_dir($assetPath)) {
+            $files = scandir($assetPath);
+            foreach ($files as $file) {
+                if (preg_match('/^(\d{3})\.(jpg|jpeg|png)$/i', $file, $matches)) {
+                    $code = $matches[1];
+                    if (!isset($availableLogos[$code])) {
+                        $availableLogos[$code] = $file;
+                    }
+                }
+            }
+        }
+
         $kppnOptions = [
             'KPPN Bandar Lampung',
             'KPPN Metro',
@@ -61,7 +76,8 @@ class DashboardController extends Controller
             'filterKementerian',
             'filterKodeSatker',
             'filterKppn',
-            'kppnOptions'
+            'kppnOptions',
+            'availableLogos'
         ));
     }
 }

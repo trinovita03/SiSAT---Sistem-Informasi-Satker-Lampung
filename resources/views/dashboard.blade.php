@@ -147,7 +147,8 @@
                         name="kementerian"
                         value="{{ $filterKementerian ?? '' }}"
                         class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                        placeholder="Nama kementerian">
+                        placeholder="Nama kementerian"
+                        spellcheck="false">
                 </div>
 
                 <div>
@@ -160,7 +161,8 @@
                         name="kode_satker"
                         value="{{ $filterKodeSatker ?? '' }}"
                         class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                        placeholder="Kode Satker">
+                        placeholder="Kode Satker"
+                        spellcheck="false">
                 </div>
 
                 <div>
@@ -255,11 +257,22 @@
                     </span>
 
                     <!-- Panggil gambar secara dinamis berdasarkan kode -->
-                    <img 
-                        src="{{ asset('asset/' . $kem->kode_kementerian . '.png') }}" 
-                        onerror="this.src='{{ asset('asset/default-logo.png') }}'"
-                        class="w-28 h-28 object-contain mx-auto hover:scale-110 transition-transform duration-300"
-                        alt="Logo {{ $kem->nama_kementerian }}">
+                    @php
+                        $logoFile = $availableLogos[$kem->kode_kementerian] ?? null;
+                    @endphp
+                    
+                    @if($logoFile)
+                        <img 
+                            src="{{ asset('asset/' . $logoFile) }}" 
+                            class="w-28 h-28 object-contain mx-auto hover:scale-110 transition-transform duration-300"
+                            alt="Logo {{ $kem->nama_kementerian }}">
+                    @else
+                        <div class="w-28 h-28 mx-auto flex items-center justify-center text-gray-400 text-3xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0z" />
+                            </svg>
+                        </div>
+                    @endif
                         
                 </div>
 
