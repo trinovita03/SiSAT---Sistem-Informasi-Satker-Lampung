@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kementerian;
+use App\Models\Satker;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -77,6 +78,56 @@ class DashboardController extends Controller
             'filterKodeSatker',
             'filterKppn',
             'kppnOptions',
+            'availableLogos'
+        ));
+    }
+
+    public function detail(Request $request, $id)
+    {
+        // Ambil data kementerian berdasarkan ID
+        $kementerian = Kementerian::findOrFail($id);
+
+        // Query untuk Satker
+        $query = $kementerian->satkers();
+
+        // Filter berdasarkan nama satker
+        $filterNamaSatker = trim((string) $request->input('nama_satker', ''));
+        if ($filterNamaSatker !== '') {
+            $query->where('nama_satker', 'like', "%{$filterNamaSatker}%");
+        }
+
+        // Filter berdasarkan kode satker
+        $filterKodeSatker = trim((string) $request->input('kode_satker', ''));
+        if ($filterKodeSatker !== '') {
+            $query->where('kode_satker', 'like', "%{$filterKodeSatker}%");
+        }
+
+        try {
+            $satkers = $query->get();
+        } catch (\Throwable $e) {
+            $satkers = collect();
+        }
+
+        // Generate list of available logo files
+        $assetPath = public_path('asset');
+        $availableLogos = [];
+        if (is_dir($assetPath)) {
+            $files = scandir($assetPath);
+            foreach ($files as $file) {
+                if (preg_match('/^(\d{3})\.(jpg|jpeg|png)$/i', $file, $matches)) {
+                    $code = $matches[1];
+                    if (!isset($availableLogos[$code])) {
+                        $availableLogos[$code] = $file;
+                    }
+                }
+            }
+        }
+
+        return view('detail-satker', compact(
+            'kementerian',
+            'satkers',
+            'filterNamaSatker',
+            'filterKodeSatker',
             'availableLogos'
         ));
     }

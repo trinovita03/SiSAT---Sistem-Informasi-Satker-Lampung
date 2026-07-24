@@ -147,8 +147,7 @@
                         name="kementerian"
                         value="{{ $filterKementerian ?? '' }}"
                         class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                        placeholder="Nama kementerian"
-                        spellcheck="false">
+                        placeholder="Nama kementerian">
                 </div>
 
                 <div>
@@ -161,8 +160,7 @@
                         name="kode_satker"
                         value="{{ $filterKodeSatker ?? '' }}"
                         class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                        placeholder="Kode Satker"
-                        spellcheck="false">
+                        placeholder="Kode Satker">
                 </div>
 
                 <div>
@@ -242,7 +240,7 @@
 
             @foreach($kementerian as $kem)
 
-            <a href="#"
+            <a href="{{ route('dashboard.detail', $kem->id) }}"
                class="card-kementerian bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-blue-100 overflow-hidden"
                data-aos="fade-up"
                data-aos-duration="800"
