@@ -83,12 +83,12 @@
 
     <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-up" data-aos-duration="800">
 
-        <form method="GET">
+        <form method="GET" class="space-y-4">
 
             <div class="grid md:grid-cols-4 gap-4">
 
                 <div>
-                    <label class="block mb-2 text-sm font-semibold">
+                    <label class="block mb-2 text-sm font-semibold text-gray-700">
                         Nama Satker
                     </label>
 
@@ -96,13 +96,13 @@
                         type="text"
                         name="nama_satker"
                         value="{{ $filterNamaSatker ?? '' }}"
-                        class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                         placeholder="Cari nama satker..."
                         spellcheck="false">
                 </div>
 
                 <div>
-                    <label class="block mb-2 text-sm font-semibold">
+                    <label class="block mb-2 text-sm font-semibold text-gray-700">
                         Kode Satker
                     </label>
 
@@ -110,19 +110,19 @@
                         type="text"
                         name="kode_satker"
                         value="{{ $filterKodeSatker ?? '' }}"
-                        class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                         placeholder="Cari kode satker..."
                         spellcheck="false">
                 </div>
 
                 <div>
-                    <label class="block mb-2 text-sm font-semibold">
-                        Wilayah KPPN
+                    <label class="block mb-2 text-sm font-semibold text-gray-700">
+                        KPPN
                     </label>
 
                     <select
                         name="kppn"
-                        class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
 
                         <option value="">
                             Semua KPPN
@@ -175,48 +175,54 @@
 
         <div class="bg-white rounded-xl shadow-md overflow-hidden" data-aos="fade-up" data-aos-duration="800">
 
-            <!-- Desktop View (Table) -->
-            <div class="hidden md:block overflow-x-auto">
+            <div class="overflow-x-auto">
 
-                <table class="w-full">
+                <table class="min-w-full divide-y divide-gray-200">
 
-                    <thead class="bg-blue-50 border-b">
+                    <thead class="bg-blue-50">
 
                         <tr>
                             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">No</th>
                             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Kode Satker</th>
                             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Nama Satker</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Wilayah</th>
-                            <th class="px-6 py-4 text-right text-sm font-semibold text-gray-700">Pagu Anggaran</th>
-                            <th class="px-6 py-4 text-right text-sm font-semibold text-gray-700">Realisasi</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Nama Kementerian</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">KPPN</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Aksi</th>
                         </tr>
 
                     </thead>
 
-                    <tbody>
+                    <tbody class="bg-white divide-y divide-gray-100">
 
                         @foreach($satkers as $satker)
 
-                            <tr class="table-row border-b transition">
-
-                                <td class="px-6 py-4 text-sm text-gray-600">{{ $loop->iteration }}</td>
-
-                                <td class="px-6 py-4 text-sm font-medium text-blue-600">{{ $satker->kode_satker }}</td>
-
-                                <td class="px-6 py-4 text-sm text-gray-800">{{ $satker->nama_satker }}</td>
+                            <tr class="table-row transition">
 
                                 <td class="px-6 py-4 text-sm text-gray-600">
-                                    {{ $satker->wilayah?->nama_wilayah ?? 'N/A' }}
+                                    {{ $satkers->firstItem() + $loop->index }}
                                 </td>
 
-                                <td class="px-6 py-4 text-sm text-right text-gray-600">
-                                    Rp {{ number_format($satker->pagu_anggaran, 0, ',', '.') }}
+                                <td class="px-6 py-4 text-sm font-medium text-blue-600">
+                                    {{ $satker->kode_satker }}
                                 </td>
 
-                                <td class="px-6 py-4 text-sm text-right">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                                        Rp {{ number_format($satker->realisasi, 0, ',', '.') }}
-                                    </span>
+                                <td class="px-6 py-4 text-sm text-gray-800">
+                                    {{ $satker->nama_satker }}
+                                </td>
+
+                                <td class="px-6 py-4 text-sm text-gray-600">
+                                    {{ $satker->kementerian?->nama_kementerian ?? $kementerian->nama_kementerian }}
+                                </td>
+
+                                <td class="px-6 py-4 text-sm text-gray-600">
+                                    {{ $satker->kppn ?? $satker->wilayah?->nama_wilayah ?? '-' }}
+                                </td>
+
+                                <td class="px-6 py-4 text-sm">
+                                    <a href="{{ route('satker.dashboard', $satker->id) }}"
+                                       class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700">
+                                        Lihat Dashboard
+                                    </a>
                                 </td>
 
                             </tr>
@@ -229,37 +235,15 @@
 
             </div>
 
-            <!-- Mobile View (Cards) -->
-            <div class="md:hidden space-y-4 p-6">
-
-                @foreach($satkers as $satker)
-
-                    <div class="border rounded-lg p-4 bg-gray-50 hover:bg-gray-100 transition">
-
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="font-bold text-gray-800 text-sm">{{ $satker->nama_satker }}</h3>
-                            <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">
-                                {{ $satker->kode_satker }}
-                            </span>
-                        </div>
-
-                        <div class="space-y-2 text-xs text-gray-600">
-                            <p><strong>Wilayah:</strong> {{ $satker->wilayah?->nama_wilayah ?? 'N/A' }}</p>
-                            <p><strong>Pagu Anggaran:</strong> Rp {{ number_format($satker->pagu_anggaran, 0, ',', '.') }}</p>
-                            <p><strong>Realisasi:</strong> <span class="text-green-600 font-medium">Rp {{ number_format($satker->realisasi, 0, ',', '.') }}</span></p>
-                        </div>
-
+            <div class="border-t border-gray-200 bg-gray-50 px-6 py-4">
+                <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <p class="text-sm text-gray-600">
+                        Menampilkan {{ $satkers->firstItem() ?? 0 }}-{{ $satkers->lastItem() ?? 0 }} dari {{ $satkers->total() }} satker
+                    </p>
+                    <div class="text-sm">
+                        {{ $satkers->appends(request()->query())->links() }}
                     </div>
-
-                @endforeach
-
-            </div>
-
-            <!-- Summary -->
-            <div class="bg-blue-50 px-6 py-4 border-t">
-                <p class="text-sm text-gray-700">
-                    Total Satker: <span class="font-bold text-blue-600">{{ $satkers->count() }}</span>
-                </p>
+                </div>
             </div>
 
         </div>

@@ -20,28 +20,8 @@ class DashboardController extends Controller
             });
         }
 
-        $filterKodeSatker = trim((string) $request->input('kode_satker', ''));
-        if ($filterKodeSatker !== '') {
-            $query->whereHas('satkers', function ($q) use ($filterKodeSatker) {
-                $q->where('kode_satker', 'like', "%{$filterKodeSatker}%");
-            });
-        }
+        $kementerian = $query->get();
 
-        try {
-            // Jika ada filter/pencarian, tampilkan semua hasil
-            // Jika tidak ada filter, limit hanya 10 kementerian
-            $hasFilter = $filterKementerian !== '' || $filterKodeSatker !== '';
-            
-            if (!$hasFilter) {
-                $kementerian = $query->limit(10)->get();
-            } else {
-                $kementerian = $query->get();
-            }
-        } catch (\Throwable $e) {
-            $kementerian = collect();
-        }
-
-        // Generate list of available logo files
         $assetPath = public_path('asset');
         $availableLogos = [];
         if (is_dir($assetPath)) {
@@ -59,36 +39,32 @@ class DashboardController extends Controller
         return view('dashboard', compact(
             'kementerian',
             'filterKementerian',
-            'filterKodeSatker',
             'availableLogos'
         ));
     }
 
     public function detail(Request $request, $id)
     {
-        // Ambil data kementerian berdasarkan ID
         $kementerian = Kementerian::findOrFail($id);
+        $query = $kementerian->satkers()->with(['kementerian', 'wilayah']);
 
-        // Query untuk Satker
-        $query = $kementerian->satkers();
-
-        // Filter berdasarkan nama satker
         $filterNamaSatker = trim((string) $request->input('nama_satker', ''));
         if ($filterNamaSatker !== '') {
             $query->where('nama_satker', 'like', "%{$filterNamaSatker}%");
         }
 
-        // Filter berdasarkan kode satker
         $filterKodeSatker = trim((string) $request->input('kode_satker', ''));
         if ($filterKodeSatker !== '') {
             $query->where('kode_satker', 'like', "%{$filterKodeSatker}%");
         }
 
-        // Filter berdasarkan KPPN
         $filterKppn = trim((string) $request->input('kppn', ''));
         if ($filterKppn !== '') {
-            $query->whereHas('wilayah', function ($wilayahQuery) use ($filterKppn) {
-                $wilayahQuery->where('nama_wilayah', 'like', "%{$filterKppn}%");
+            $query->where(function ($q) use ($filterKppn) {
+                $q->where('kppn', 'like', "%{$filterKppn}%")
+                    ->orWhereHas('wilayah', function ($wilayahQuery) use ($filterKppn) {
+                        $wilayahQuery->where('nama_wilayah', 'like', "%{$filterKppn}%");
+                    });
             });
         }
 
@@ -99,13 +75,8 @@ class DashboardController extends Controller
             'KPPN Liwa',
         ];
 
-        try {
-            $satkers = $query->get();
-        } catch (\Throwable $e) {
-            $satkers = collect();
-        }
+        $satkers = $query->paginate(15);
 
-        // Generate list of available logo files
         $assetPath = public_path('asset');
         $availableLogos = [];
         if (is_dir($assetPath)) {
@@ -129,5 +100,12 @@ class DashboardController extends Controller
             'kppnOptions',
             'availableLogos'
         ));
+    }
+
+    public function showSatkerDashboard($id)
+    {
+        $satker = Satker::with(['kementerian', 'wilayah'])->findOrFail($id);
+
+        return view('satker-dashboard', compact('satker'));
     }
 }
