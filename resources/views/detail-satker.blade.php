@@ -85,7 +85,7 @@
 
         <form method="GET">
 
-            <div class="grid md:grid-cols-3 gap-4">
+            <div class="grid md:grid-cols-4 gap-4">
 
                 <div>
                     <label class="block mb-2 text-sm font-semibold">
@@ -113,6 +113,30 @@
                         class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                         placeholder="Cari kode satker..."
                         spellcheck="false">
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-semibold">
+                        Wilayah KPPN
+                    </label>
+
+                    <select
+                        name="kppn"
+                        class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+
+                        <option value="">
+                            Semua KPPN
+                        </option>
+
+                        @foreach($kppnOptions as $option)
+                            <option
+                                value="{{ $option }}"
+                                @selected(($filterKppn ?? '') == $option)>
+                                {{ $option }}
+                            </option>
+                        @endforeach
+
+                    </select>
                 </div>
 
                 <div class="flex items-end gap-3">

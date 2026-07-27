@@ -27,19 +27,10 @@ class DashboardController extends Controller
             });
         }
 
-        $filterKppn = trim((string) $request->input('kppn', ''));
-        if ($filterKppn !== '') {
-            $query->whereHas('satkers', function ($q) use ($filterKppn) {
-                $q->whereHas('wilayah', function ($wilayahQuery) use ($filterKppn) {
-                    $wilayahQuery->where('nama_wilayah', 'like', "%{$filterKppn}%");
-                });
-            });
-        }
-
         try {
             // Jika ada filter/pencarian, tampilkan semua hasil
             // Jika tidak ada filter, limit hanya 10 kementerian
-            $hasFilter = $filterKementerian !== '' || $filterKodeSatker !== '' || $filterKppn !== '';
+            $hasFilter = $filterKementerian !== '' || $filterKodeSatker !== '';
             
             if (!$hasFilter) {
                 $kementerian = $query->limit(10)->get();
@@ -65,19 +56,10 @@ class DashboardController extends Controller
             }
         }
 
-        $kppnOptions = [
-            'KPPN Bandar Lampung',
-            'KPPN Metro',
-            'KPPN Kotabumi',
-            'KPPN Liwa',
-        ];
-
         return view('dashboard', compact(
             'kementerian',
             'filterKementerian',
             'filterKodeSatker',
-            'filterKppn',
-            'kppnOptions',
             'availableLogos'
         ));
     }
@@ -101,6 +83,21 @@ class DashboardController extends Controller
         if ($filterKodeSatker !== '') {
             $query->where('kode_satker', 'like', "%{$filterKodeSatker}%");
         }
+
+        // Filter berdasarkan KPPN
+        $filterKppn = trim((string) $request->input('kppn', ''));
+        if ($filterKppn !== '') {
+            $query->whereHas('wilayah', function ($wilayahQuery) use ($filterKppn) {
+                $wilayahQuery->where('nama_wilayah', 'like', "%{$filterKppn}%");
+            });
+        }
+
+        $kppnOptions = [
+            'KPPN Bandar Lampung',
+            'KPPN Metro',
+            'KPPN Kotabumi',
+            'KPPN Liwa',
+        ];
 
         try {
             $satkers = $query->get();
@@ -128,6 +125,8 @@ class DashboardController extends Controller
             'satkers',
             'filterNamaSatker',
             'filterKodeSatker',
+            'filterKppn',
+            'kppnOptions',
             'availableLogos'
         ));
     }
