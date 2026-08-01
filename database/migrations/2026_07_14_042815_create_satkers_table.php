@@ -22,6 +22,10 @@ return new class extends Migration
             $table->string('kode_satker', 20)->unique();
             $table->string('nama_satker');
             
+            // --- INI TAMBAHANNYA ---
+            $table->string('kppn')->nullable(); 
+            // -----------------------
+            
             // Menggunakan tipe desimal untuk nilai uang agar presisi (20 digit angka, 2 di belakang koma)
             $table->decimal('pagu_anggaran', 20, 2)->default(0); 
             $table->decimal('realisasi', 20, 2)->default(0);
