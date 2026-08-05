@@ -11,7 +11,7 @@
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
             <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
-                    <p class="text-sm font-semibold uppercase tracking-wide text-blue-600">Dashboard Satker</p>
+                    <!-- <p class="text-sm font-semibold uppercase tracking-wide text-blue-600">Dashboard Satker</p> -->
                     <h1 class="text-3xl font-bold mt-2">{{ $satker->nama_satker }}</h1>
                     <p class="text-slate-600 mt-2">{{ $satker->kementerian?->nama_kementerian ?? '-' }} • Kode Satker: {{ $satker->kode_satker }}</p>
                 </div>

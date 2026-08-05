@@ -57,9 +57,9 @@
 
             <!-- Info Kementerian -->
             <div>
-                <p class="text-blue-100 text-sm mb-2">Kode: {{ $kementerian->kode_kementerian }}</p>
+                <!-- <p class="text-blue-100 text-sm mb-2">Kode: {{ $kementerian->kode_kementerian }}</p> -->
                 <h1 class="text-4xl font-bold">{{ $kementerian->nama_kementerian }}</h1>
-                <p class="text-blue-200 mt-2">Detail Satuan Kerja (Satker)</p>
+                <!-- <p class="text-blue-200 mt-2">Detail Satuan Kerja (Satker)</p> -->
             </div>
 
         </div>
@@ -185,7 +185,7 @@
                             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">No</th>
                             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Kode Satker</th>
                             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Nama Satker</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Nama Kementerian</th>
+                            <!-- <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Nama Kementerian</th> -->
                             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">KPPN</th>
                             <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Aksi</th>
                         </tr>
@@ -210,9 +210,9 @@
                                     {{ $satker->nama_satker }}
                                 </td>
 
-                                <td class="px-6 py-4 text-sm text-gray-600">
+                                <!-- <td class="px-6 py-4 text-sm text-gray-600">
                                     {{ $satker->kementerian?->nama_kementerian ?? $kementerian->nama_kementerian }}
-                                </td>
+                                </td> -->
 
                                 <td class="px-6 py-4 text-sm text-gray-600">
                                     {{ $satker->kppn ?? $satker->wilayah?->nama_wilayah ?? '-' }}
@@ -221,7 +221,7 @@
                                 <td class="px-6 py-4 text-sm">
                                     <a href="{{ route('satker.dashboard', $satker->id) }}"
                                        class="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700">
-                                        Lihat Dashboard
+                                        Lihat Detail
                                     </a>
                                 </td>
 
