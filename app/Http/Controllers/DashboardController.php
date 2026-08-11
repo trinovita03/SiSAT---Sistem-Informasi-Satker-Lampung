@@ -104,7 +104,7 @@ class DashboardController extends Controller
 
     public function showSatkerDashboard($id)
     {
-        $satker = Satker::with(['kementerian', 'wilayah'])->findOrFail($id);
+        $satker = Satker::with(['kementerian', 'wilayah', 'pejabat'])->findOrFail($id);
 
         return view('satker-dashboard', compact('satker'));
     }
