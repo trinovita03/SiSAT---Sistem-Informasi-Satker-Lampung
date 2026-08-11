@@ -113,5 +113,21 @@ $kementerianData = [
             'pagu_anggaran' => 8000000000.00,
             'realisasi' => 6000000000.00,
         ]);
+
+        $this->call(PolriSatkerSeeder::class);
+        $this->call(MahkamahAgungSatkerSeeder::class);
+        $this->call(KementerianAgamaSatkerSeeder::class);
+        $this->call(PendidikanSatkerSeeder::class);
+        $this->call(PerhubunganSatkerSeeder::class);
+        $this->call(AgrariaSatkerSeeder::class);
+        $this->call(BpsSatkerSeeder::class);
+        $this->call(KpuSatkerSeeder::class);
+        $this->call(PertanianSatkerSeeder::class);
+        $this->call(HukumHamSatkerSeeder::class);
+        $this->call(LingkunganHutananSatkerSeeder::class);
+        $this->call(PekerjaanUmumSatkerSeeder::class);
+        $this->call(KeuanganSatkerSeeder::class);
+        $this->call(KelautanTransmigrasiSatkerSeeder::class);
+        $this->call(TambahanSatkerSeeder::class);
     }
 }
