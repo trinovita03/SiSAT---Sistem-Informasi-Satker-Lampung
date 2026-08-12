@@ -60,7 +60,7 @@
                     <article class="overflow-hidden rounded-2xl border border-blue-100 bg-gradient-to-b from-white via-white to-blue-50 shadow-lg shadow-slate-200/60 transition duration-300 hover:-translate-y-1 hover:shadow-blue-200/70">
                         <div class="flex items-center justify-between border-b border-blue-100 bg-gradient-to-r from-blue-100 to-sky-50 px-5 py-4">
                             <h3 class="font-bold text-blue-900">{{ $jenis }}</h3>
-                            <span class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-blue-700">{{ $pejabat ? 'Terisi' : 'Belum diisi' }}</span>
+                                    <span class="rounded-full px-3 py-1 text-xs font-semibold text-blue-700">{{ $pejabat ? 'Terisi' : 'Belum diisi' }}</span>
                         </div>
 
                         <div class="p-5">
@@ -68,7 +68,7 @@
                                 @if($pejabat->foto)
                                     <img src="{{ asset('storage/' . ltrim($pejabat->foto, '/')) }}" alt="Foto {{ $pejabat->nama }}" class="mx-auto h-32 w-32 rounded-full object-cover ring-4 ring-blue-50">
                                 @else
-                                    <div class="mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-slate-100 text-3xl font-bold text-slate-400">{{ strtoupper(substr($pejabat->nama ?: '?', 0, 1)) }}</div>
+                                    <div class="mx-auto flex h-32 w-32 items-center justify-center rounded-full text-3xl font-bold text-slate-400">{{ strtoupper(substr($pejabat->nama ?: '?', 0, 1)) }}</div>
                                 @endif
 
                                 <h4 class="mt-4 text-center text-lg font-bold text-slate-900">{{ $pejabat->nama ?: '-' }}</h4>
@@ -80,9 +80,9 @@
                                     <div class="flex justify-between gap-4"><dt class="text-slate-500">No. WA</dt><dd class="text-right font-medium text-slate-800">{{ $pejabat->no_wa ?: '-' }}</dd></div>
                                     <div class="flex justify-between gap-4"><dt class="text-slate-500">Email</dt><dd class="break-all text-right font-medium text-slate-800">{{ $pejabat->email ?: '-' }}</dd></div>
                                 </dl>
-                            @else
+                                @else
                                 <div class="flex min-h-64 flex-col items-center justify-center text-center">
-                                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-2xl text-slate-400">-</div>
+                                    <div class="flex h-16 w-16 items-center justify-center rounded-full text-2xl text-slate-400">-</div>
                                     <p class="mt-4 font-semibold text-slate-700">Data belum tersedia</p>
                                     <p class="mt-1 text-sm text-slate-500">Informasi {{ $jenis }} belum diinput.</p>
                                 </div>

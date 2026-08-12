@@ -27,7 +27,7 @@ class DashboardController extends Controller
         if (is_dir($assetPath)) {
             $files = scandir($assetPath);
             foreach ($files as $file) {
-                if (preg_match('/^(\d{3})\.(jpg|jpeg|png)$/i', $file, $matches)) {
+                if (preg_match('/^(\d{1,3})\.(jpg|jpeg|png)$/i', $file, $matches)) {
                     $code = $matches[1];
                     if (!isset($availableLogos[$code])) {
                         $availableLogos[$code] = $file;
@@ -82,7 +82,7 @@ class DashboardController extends Controller
         if (is_dir($assetPath)) {
             $files = scandir($assetPath);
             foreach ($files as $file) {
-                if (preg_match('/^(\d{3})\.(jpg|jpeg|png)$/i', $file, $matches)) {
+                if (preg_match('/^(\d{1,3})\.(jpg|jpeg|png)$/i', $file, $matches)) {
                     $code = $matches[1];
                     if (!isset($availableLogos[$code])) {
                         $availableLogos[$code] = $file;
